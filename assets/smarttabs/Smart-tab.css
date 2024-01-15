@@ -1,0 +1,397 @@
+/*
+* SmartTab plugin v2.0
+* jQuery Tab Control Plugin
+* 
+* by Dipu Raj
+* http://techlaboratory.net/smarttab
+* 
+* License 
+* http://creativecommons.org/licenses/by-sa/3.0/  
+*/
+
+:root {
+    --st-background: unset;
+    --st-border: 1px solid #eeeeee;
+    --st-anchor-default-primary-color: #60bef5;
+    --st-anchor-default-secondary-color: #dbe0e5;
+    --st-anchor-active-primary-color: #009EF7;
+    --st-anchor-active-secondary-color: #ffffff;
+    --st-anchor-disabled-primary-color: #eeeeee;
+    --st-anchor-disabled-secondary-color: #dbe0e5;
+    --st-loader-color: #009EF7;
+    --st-loader-background-color: #f8f9fa;
+    --st-loader-background-wrapper-color: rgba(255, 255, 255, 0.7)
+}
+
+.st {
+    position: relative
+}
+
+.st *,
+.st ::after,
+.st ::before {
+    box-sizing: border-box
+}
+
+.st>.tab-content {
+    position: relative;
+    overflow: hidden;
+    height: auto
+}
+
+.st>.tab-content>.tab-pane {
+    padding: .8rem
+}
+
+.st>.nav {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 0
+}
+
+@media screen and (max-width:640px) {
+    .st>.nav {
+        flex-direction: column!important;
+        flex: 1 auto
+    }
+}
+
+.st>.nav .nav-link {
+    position: relative;
+    display: block;
+    padding: .5rem 1rem;
+    height: 100%;
+    min-height: 100%;
+    text-decoration: none
+}
+
+.st>.nav .nav-link:active,
+.st>.nav .nav-link:focus,
+.st>.nav .nav-link:hover {
+    text-decoration: none
+}
+
+.st>.nav .nav-link::-moz-focus-inner {
+    border: 0
+}
+
+.st>.nav .nav-link.disabled {
+    pointer-events: none;
+    cursor: not-allowed
+}
+
+.st>.nav .nav-link.hidden {
+    display: none;
+    visibility: none
+}
+
+.st.st-vertical {
+    display: flex!important;
+    flex-wrap: nowrap
+}
+
+.st.st-vertical>.nav {
+    flex-direction: column!important;
+    flex: 1 auto
+}
+
+.st.st-vertical>.nav .nav-link {
+    text-align: left
+}
+
+.st.st-vertical>.nav .nav-link,
+.st.st-vertical>.nav>li {
+    flex-grow: unset!important
+}
+
+.st.st-vertical>.tab-content {
+    flex: 1 100%
+}
+
+.st.st-justified>.nav .nav-link,
+.st.st-justified>.nav>li {
+    flex-basis: 0;
+    flex-grow: 1;
+    text-align: center
+}
+
+.st.st-loading {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none
+}
+
+.st.st-loading::after {
+    content: "";
+    display: block;
+    position: absolute;
+    opacity: 1;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: var(--st-loader-background-wrapper-color);
+    z-index: 2
+}
+
+.st.st-loading::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    width: 2rem;
+    height: 2rem;
+    border: 10px solid var(--st-loader-color);
+    border-top: 10px solid var(--st-loader-background-color);
+    border-radius: 50%;
+    z-index: 10;
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite
+}
+
+@-webkit-keyframes spin {
+    0% {
+        transform: rotate(0)
+    }
+    100% {
+        transform: rotate(360deg)
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0)
+    }
+    100% {
+        transform: rotate(360deg)
+    }
+}
+
+.st-theme-basic {
+    border: var(--st-border);
+    background: var(--st-background)
+}
+
+.st-theme-basic>.nav {
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .1)
+}
+
+.st-theme-basic>.nav .nav-link {
+    position: relative;
+    height: 100%;
+    min-height: 100%;
+    color: var(--st-anchor-default-primary-color)
+}
+
+.st-theme-basic>.nav .nav-link::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    height: 2px;
+    width: 0;
+    left: 0;
+    bottom: -1px;
+    transition: all .35s ease .15s;
+    width: 100%
+}
+
+.st-theme-basic>.nav .nav-link.active {
+    color: var(--st-anchor-active-primary-color)!important
+}
+
+.st-theme-basic>.nav .nav-link.active::after {
+    background: var(--st-anchor-active-primary-color)!important
+}
+
+.st-theme-basic>.nav .nav-link.disabled {
+    color: var(--st-anchor-disabled-primary-color)!important
+}
+
+.st-theme-basic.st-vertical>.nav {
+    box-shadow: .125rem 0 .25rem rgba(0, 0, 0, .1)!important
+}
+
+.st-theme-basic.st-vertical>.nav .nav-link::after {
+    height: 100%;
+    width: 2px;
+    top: 0;
+    left: unset;
+    bottom: unset;
+    right: -1px
+}
+
+
+/* custom css */
+
+.stMain {
+    display: block;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    border: 0px solid #CCC;
+    font-family: "Segoe UI", Tahoma, arial, sans-serif;
+    font-size: 13px;
+    text-align: justify;
+}
+
+.stContainer {
+    display: block;
+    margin: 0;
+    padding: 10px 0px;
+    overflow: hidden;
+    position: relative;
+    min-height: 500px;
+    text-align: justify;
+    line-height: 18px;
+}
+
+.stContainer ul {
+    margin: 5px 0px 5px 25px
+}
+
+.stContainer strong,
+b {
+    font-weight: bold;
+}
+
+.stMain div.tabContent {
+    display: block;
+    position: absolute;
+    margin: 0;
+    padding: 10px 0px;
+    border: 0px solid #D4D4D4;
+    background-color: #FFF;
+    text-align: justify;
+}
+
+.stMain div.tabContent>img {
+    display: block;
+    margin: 10px auto !important
+}
+
+.stMain ul.tabAnchor {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    list-style-type: none;
+    position: relative;
+    padding: 0;
+    margin: 0;
+    clear: both;
+    z-index: 100;
+    margin-top: -70px;
+    width: 100%;
+}
+
+.stMain ul.tabAnchor li {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    /* float: left; */
+    display: block;
+}
+
+.stMain ul.tabAnchor li a {
+    display: block;
+    /* padding: 100px 0px 5px 0px; */
+    padding: 0 0 5px 0;
+    height: 54px;
+    font-size: 14px;
+    color: #666;
+    text-decoration: none;
+    outline-style: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: -1px;
+    /* margin-top: -100px; */
+    line-height: 22px;
+}
+
+.stMain ul.tabAnchor li {
+    /* height: 59px; */
+    display: block;
+    padding-top: 105px;
+    text-align: center;
+    font-size: 12px;
+    text-transform: uppercase;
+    width: calc(100% / 4);
+    /* margin-right: 15px; */
+}
+
+.stMain ul.tabAnchor li:last-child {
+    margin-right: 0
+}
+
+.stMain ul.tabAnchor li.tab1 {
+    background: url('../images/Tab1.png') no-repeat top center
+}
+
+.stMain ul.tabAnchor li.tab1:hover,
+.stMain ul.tabAnchor li.tab1 a.sel {
+    background: url('../images/Tab1.png') no-repeat bottom center;
+}
+
+.stMain ul.tabAnchor li.tab2 {
+    background: url('../images/Tab2.png') no-repeat top center
+}
+
+.stMain ul.tabAnchor li.tab2:hover,
+.stMain ul.tabAnchor li.tab2 a.sel {
+    background: url('../images/Tab2.png') no-repeat bottom center;
+}
+
+.stMain ul.tabAnchor li.tab3 {
+    background: url('../images/Tab3.png') no-repeat top center
+}
+
+.stMain ul.tabAnchor li.tab3:hover,
+.stMain ul.tabAnchor li.tab3 a.sel {
+    background: url('../images/Tab3.png') no-repeat bottom center;
+}
+
+.stMain ul.tabAnchor li.tab4 {
+    background: url('../images/Tab4.png') no-repeat top center
+}
+
+.stMain ul.tabAnchor li.tab4:hover,
+.stMain ul.tabAnchor li.tab4 a.sel {
+    background: url('../images/Tab4.png') no-repeat bottom center;
+}
+
+.loader {
+    position: absolute;
+    left: 48%;
+    top: 40%;
+    display: block;
+    margin: 0;
+    padding: 5px;
+    padding-top: 35px;
+    font-size: 10px;
+    color: #666;
+    text-decoration: none;
+    outline-style: none;
+    border: 1px solid #D4D4D4;
+    background: #f6f6f6 url(/Images/loader.gif) no-repeat 10px 10px;
+}
+
+a.stLinks {
+    margin: 0;
+    padding: 5px;
+    color: #666;
+    text-decoration: none;
+    outline-style: none;
+    border: 1px solid #D4D4D4;
+    background-color: #f6f6f6;
+}
+
+a.stLinks:hover {
+    color: #FFF;
+    background-color: #00A7DB;
+}
+
+
+/* CSS Document */

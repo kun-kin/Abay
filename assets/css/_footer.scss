@@ -1,0 +1,80 @@
+.newfooter {
+    background: #22376f url('../images/newBgFooter.jpg') no-repeat top center;
+    padding: 20px;
+}
+
+.listFAQ {
+    margin: 5px 0 5px 25px;
+    list-style: none;
+    li {
+        white-space: nowrap;
+        a {
+            background: url('../images/listItem-3.png') no-repeat center left;
+            font-size: 11px;
+            color: #fff;
+            text-decoration: none;
+            padding-left: 10px;
+            line-height: 18px;
+        }
+    }
+}
+
+.imgSocial {
+    width: 23px;
+    height: 23px;
+}
+
+.imgBCT {
+    width: 184px;
+    height: 61px;
+}
+
+.imgVP {
+    width: 94px;
+    height: 94px;
+}
+
+.uppercase-white {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.link {
+    color: #c7eafb;
+    text-decoration: none;
+}
+
+.mainfooter {
+    margin-top: 25px;
+    margin-left: 30px;
+    img {
+        float: left;
+        margin-right: 6px;
+        padding: 1px;
+        border: solid 1px #b7b7b7;
+        width: 90px;
+    }
+    &-VP {
+        margin-bottom: 15px;
+        float: left;
+        width: 100%;
+        p {
+            // float: left;
+            font-size: 11px;
+            color: #fff;
+            margin-right: 15px;
+            line-height: 15px;
+        }
+    }
+    @media(max-width:576px) {
+        margin-left: 0;
+    }
+}
+
+.copyright {
+    margin-top: 25px;
+    text-align: right;
+    font-size: 11px;
+    color: #fff;
+}
